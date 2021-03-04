@@ -3,4 +3,4 @@ WORKDIR /code
 EXPOSE 8000
 COPY /src /code
 RUN pip3 install -r requirements.txt
-CMD ["uvicorn", "main:app", "--reload"]
+CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000", "main:app"]
