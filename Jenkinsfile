@@ -7,15 +7,13 @@ pipeline {
         script {
           dockerTestImage = docker.build("api:$BUILD_NUMBER", "-f Testdockerfile .")
         }
-        sh 'docker ps -a'
         script {
-          dockerTestContainer = dockerTestImage.run()
+          dockerTestContainer = dockerTestImage.run("--name api_container_$BUILD_NUMBER")
         }
-        sh 'docker ps -a'
-        script{
-            dockerTestContainer.stop()
+        sh "docker logs api_container_$BUILD_NUMBER"
+        script {
+          dockerTestContainer.stop()
         }
-        sh 'docker ps -a'
       }
     }
     stage("push to registry") {
