@@ -1,15 +1,20 @@
+TESTS_PASSED = false
 pipeline {
   agent any
   stages {
-    stage("build") {
+    stage("build and run tests") {
       steps {
-        echo 'building'
-        echo 'added trigger'
+        script {
+          dockerTestImage = docker.build "-t api:$BUILD_NUMBER -f Testdockerfile"
+          dockerTestImage.withRun()
+          echo 'done build and test'
+        }
       }
     }
-    stage("test") {
+    stage("push to registry") {
       steps {
-        echo 'testing'
+        sh 'ls'
+        sh 'pwd'
       }
     }
     stage("deploy") {
