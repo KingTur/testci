@@ -5,7 +5,7 @@ pipeline {
     stage("build and run tests") {
       steps {
         script {
-          dockerTestImage = docker.build "-t api:$BUILD_NUMBER -f Testdockerfile"
+          dockerTestImage = docker.build "api:$BUILD_NUMBER -f Testdockerfile"
           dockerTestImage.withRun()
           echo 'done build and test'
         }
