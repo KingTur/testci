@@ -6,7 +6,6 @@ pipeline {
       steps {
         script {
           dockerTestImage = docker.build "api:$BUILD_NUMBER -f Testdockerfile"
-          dockerTestImage.withRun()
         }
         sh 'ls'
       }
