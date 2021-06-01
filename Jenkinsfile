@@ -7,7 +7,11 @@ pipeline {
         script {
           dockerTestImage = docker.build "api:$BUILD_NUMBER -f Testdockerfile"
         }
-        sh 'ls'
+        sh 'docker ps -a'
+        script {
+          dockerTestImage.run('--rm')
+        }
+        sh 'docker ps -a'
       }
     }
     stage("push to registry") {
