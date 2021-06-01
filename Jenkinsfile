@@ -5,11 +5,15 @@ pipeline {
     stage("build and run tests") {
       steps {
         script {
-          dockerTestImage = docker.build("api:$BUILD_NUMBER -f Testdockerfile")
+          dockerTestImage = docker.build("api:$BUILD_NUMBER", "-f Testdockerfile .")
         }
         sh 'docker ps -a'
         script {
-          dockerTestImage.run('--rm')
+          dockerTestContainer = dockerTestImage.run()
+        }
+        sh 'docker ps -a'
+        script{
+            dockerTestContainer.stop()
         }
         sh 'docker ps -a'
       }
