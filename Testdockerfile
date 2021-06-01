@@ -1,0 +1,6 @@
+FROM python:3.8
+WORKDIR /tests 
+EXPOSE 8000
+COPY /tests /tests
+RUN pip3 install pytest
+CMD pytest
